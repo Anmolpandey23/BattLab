@@ -14,7 +14,9 @@ if (typeof console !== "undefined") {
         if (
           msg.includes("Clock: This module has been deprecated") ||
           msg.includes("PCFSoftShadowMap has been removed") ||
-          msg.includes("Attempted to synchronously unmount a root while React was already rendering")
+          msg.includes("Attempted to synchronously unmount a root while React was already rendering") ||
+          msg.includes("rendering with server caches disabled") ||
+          msg.includes("cache-bypass-in-dev")
         ) {
           return;
         }

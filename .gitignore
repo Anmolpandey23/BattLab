@@ -33,6 +33,8 @@ node_modules/
 out/
 *.tsbuildinfo
 next-env.d.ts
+AGENTS.md
+frontend/AGENTS.md
 
 # Logs
 *.log
