@@ -9,3 +9,5 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NEXT_PUBLIC_API_URL = "https://battlab-api.onrender.com/api"
+
