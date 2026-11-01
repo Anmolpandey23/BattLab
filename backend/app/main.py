@@ -72,6 +72,18 @@ app.include_router(projects.router, prefix="/api")
 app.include_router(simulations.router, prefix="/api")
 app.include_router(compare_reports.router, prefix="/api")
 
+
+@app.get("/", tags=["root"])
+def root():
+    """Root landing endpoint for the BattLab API."""
+    return {
+        "status": "online",
+        "service": "BattLab API",
+        "version": APP_VERSION,
+        "docs": "/docs",
+        "health": "/api/health",
+    }
+
 from fastapi import Depends
 from sqlmodel import Session
 from app.database import engine
