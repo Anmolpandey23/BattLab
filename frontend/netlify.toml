@@ -1,0 +1,11 @@
+# Netlify Configuration for BattLab Frontend
+
+[build]
+  publish = ".next"
+  command = "npm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"

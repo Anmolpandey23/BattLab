@@ -36,7 +36,8 @@
 7. [Automated Testing & QA Verification](#7-automated-testing--qa-verification)
 8. [Complete REST API Reference](#8-complete-rest-api-reference)
 9. [Scientific Validation Against NASA PCoE Datasets](#9-scientific-validation-against-nasa-pcoe-datasets)
-10. [Engineering Safety Boundaries & Disclaimer](#10-engineering-safety-boundaries--disclaimer)
+10. [Deploying on Netlify (Frontend) & Render (Backend)](#10-deploying-on-netlify-frontend--render-backend)
+11. [Engineering Safety Boundaries & Disclaimer](#11-engineering-safety-boundaries--disclaimer)
 
 ---
 
@@ -337,7 +338,37 @@ All source datasets, SHA-256 manifests, and comparison charts are preserved in [
 
 ---
 
-## 10. Engineering Safety Boundaries & Disclaimer
+## 10. Deploying on Netlify (Frontend) & Render (Backend)
+
+BattLab is pre-configured for seamless cloud deployment:
+
+### Part A: Deploy Backend on Render
+1. Log in to [Render](https://dashboard.render.com/) and click **New +** $\to$ **Blueprint** (or **Web Service**).
+2. Connect your GitHub repository: `https://github.com/Anmolpandey23/BattLab`.
+3. Render automatically detects [`render.yaml`](render.yaml):
+   - **Root Directory:** `backend`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+   - **Plan:** Free
+4. Click **Apply**. Once deployed, Render will provide a service URL (e.g. `https://battlab-api.onrender.com`).
+5. Copy your Render API URL.
+
+### Part B: Deploy Frontend on Netlify
+1. Log in to [Netlify](https://app.netlify.com/) and click **Add new site** $\to$ **Import an existing project**.
+2. Select GitHub and choose your repository: `Anmolpandey23/BattLab`.
+3. Netlify automatically reads [`netlify.toml`](netlify.toml):
+   - **Base directory:** `frontend`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `frontend/.next`
+   - **Plugin:** `@netlify/plugin-nextjs`
+4. Under **Site configuration** $\to$ **Environment variables**, add:
+   - **Key:** `NEXT_PUBLIC_API_URL`
+   - **Value:** `https://<your-render-service-name>.onrender.com/api`
+5. Click **Deploy BattLab**. Netlify will build and publish your Next.js application with full SSR and 3D WebGL support!
+
+---
+
+## 11. Engineering Safety Boundaries & Disclaimer
 
 > [!CAUTION]
 > **Intended Use & Laboratory Safety Disclaimer:**  

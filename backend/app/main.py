@@ -3,6 +3,7 @@ BattLab — FastAPI Main Application
 """
 from __future__ import annotations
 
+import os
 import logging
 from contextlib import asynccontextmanager
 
@@ -39,13 +40,32 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Robust CORS configuration supporting local dev, Netlify previews, and custom production domains
+ALLOWED_ORIGINS_ENV = os.environ.get("ALLOWED_ORIGINS", "")
+raw_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+if ALLOWED_ORIGINS_ENV:
+    raw_origins.extend([o.strip() for o in ALLOWED_ORIGINS_ENV.split(",") if o.strip()])
+
+if "*" in raw_origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=raw_origins,
+        allow_origin_regex=r"https://.*\.netlify\.app",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 app.include_router(library.router, prefix="/api")
 app.include_router(projects.router, prefix="/api")
