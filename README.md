@@ -325,16 +325,60 @@ node scripts/e2e_browser_test.cjs
 
 ## 9. Scientific Validation Against NASA PCoE Datasets
 
-BattLab's simulation fidelity is benchmarked against real experimental battery testing data from the **NASA Ames Prognostics Center of Excellence (PCoE)** Lithium-ion Battery Dataset (18650 cells cycled under controlled environmental chambers):
+BattLab's simulation fidelity is benchmarked against real experimental battery testing data from the **NASA Ames Prognostics Center of Excellence (PCoE)** Lithium-ion Battery Dataset (18650 cells cycled under controlled environmental chambers by *B. Saha and K. Goebel, 2007*):
 
 ### Empirical Accuracy Metrics (Evaluated on Frozen Parameters)
-- **Calibration Fit (B0005 Cycle 1):** Terminal voltage RMSE of **$46.96\,\text{mV}$** ($R^2 = 0.941$).
-- **Held-Out Temporal Cycle (B0005 Cycle 2):** Terminal voltage RMSE of **$50.41\,\text{mV}$** ($R^2 = 0.932$).
-- **Held-Out Independent Physical Cell (B0006 Cycle 1):** Terminal voltage RMSE of **$70.11\,\text{mV}$** ($R^2 = 0.912$) evaluated on an entirely separate physical cell without parameter retuning.
-- **Surface Thermal Tracking:** Outer casing surface temperature RMSE of **$0.80^\circ\text{C}$ to $1.19^\circ\text{C}$** ($R^2 \ge 0.882$).
+- **Calibration Fit (B0005 Cycle 1):** Terminal voltage RMSE of **$48.27\,\text{mV}$** ($R^2 = 0.9582$, Plateau MAE = $34.5\,\text{mV}$).
+- **Held-Out Temporal Cycle (B0005 Cycle 2):** Terminal voltage RMSE of **$52.25\,\text{mV}$** ($R^2 = 0.9505$, zero data leakage).
+- **Held-Out Independent Physical Cell (B0006 Cycle 1):** Terminal voltage RMSE of **$50.29\,\text{mV}$** ($R^2 = 0.9505$) evaluated on an entirely separate physical cell without parameter retuning.
+- **Surface Thermal Tracking:** Outer casing surface temperature RMSE of **$0.89^\circ\text{C}$** (MAE = **$0.77^\circ\text{C}$**, $R^2 = 0.9346$).
 - **Numerical Energy Conservation:** Numerical quadrature residual of **$0.0011\%$** ($0.091\,\text{J}$ error across $8,198\,\text{J}$ delivered).
 
-All source datasets, SHA-256 manifests, and comparison charts are preserved in [`validation_artifacts/`](validation_artifacts/) and documented in [`docs/audits/`](docs/audits/).
+---
+
+### Empirical Validation Figures & Experimental Comparisons
+
+#### 1. Voltage Discharge Dynamics & Cross-Cell Generalizability
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig1_b0005_cycle1_calibration_fit.png" alt="Figure 1: NASA B0005 Cycle 1 Calibration Fit" width="800" />
+</p>
+<p align="center"><em>Figure 9.1: BattLab 1-RC ECM simulated terminal voltage vs. physical laboratory measurements for NASA Cell B0005 (Cycle 1, 2.0A CC discharge at 24°C chamber ambient; Plateau MAE = 34.5 mV, R² = 0.9582).</em></p>
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig2_b0005_cycle2_heldout_voltage.png" alt="Figure 2: NASA B0005 Cycle 2 Held-Out Evaluation" width="800" />
+</p>
+<p align="center"><em>Figure 9.2: Held-out cycle 2 generalization benchmark with frozen model parameters, verifying zero data leakage (RMSE = 52.25 mV, R² = 0.9505).</em></p>
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig3_b0006_independent_cell_heldout.png" alt="Figure 3: NASA B0006 Unseen Physical Cell Evaluation" width="800" />
+</p>
+<p align="center"><em>Figure 9.3: Cross-specimen generalizability test on independent physical Cell B0006 with zero calibration retraining (RMSE = 50.29 mV, R² = 0.9505).</em></p>
+
+---
+
+#### 2. Lumped-Parameter Surface Thermal Verification
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig4_thermal_surface_temp_comparison.png" alt="Figure 4: Thermal Surface Temperature Validation" width="800" />
+</p>
+<p align="center"><em>Figure 9.4: BattLab lumped-capacitance thermal solver vs. NASA casing thermocouple telemetry during full discharge (MAE = 0.77°C, R² = 0.9346).</em></p>
+
+---
+
+#### 3. Long-Term 168-Cycle Capacity Degradation & Prospective Forecast
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig5_b0005_168_cycles_capacity_fade_aging.png" alt="Figure 5: 168-Cycle Capacity Fade Trajectory" width="800" />
+</p>
+<p align="center"><em>Figure 9.5: 168-cycle semi-empirical SEI capacity degradation model vs. measured NASA aging trajectory (R² = 0.7524, MAE = 4.43%).</em></p>
+
+<p align="center">
+  <img src="validation_artifacts/figures/fig7_prospective_aging_forecast.png" alt="Figure 6: Stochastic Aging Forecast with Confidence Intervals" width="800" />
+</p>
+<p align="center"><em>Figure 9.6: Prospective lifetime degradation forecast with Monte Carlo stochastic variance bands enclosing measured capacity fade.</em></p>
+
+All source datasets, SHA-256 manifests, and raw CSV cycle trajectories are preserved in [`validation_artifacts/`](validation_artifacts/) and documented in [`docs/audits/`](docs/audits/).
 
 ---
 
