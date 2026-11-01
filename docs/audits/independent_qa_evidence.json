@@ -1,0 +1,175 @@
+{
+  "phase3_calculations": {
+    "total_cells": {
+      "ref": 112,
+      "actual": 112,
+      "pass": true
+    },
+    "nominal_voltage_v": {
+      "ref": 51.800000000000004,
+      "actual": 51.8,
+      "pass": true
+    },
+    "capacity_ah": {
+      "ref": 40.0,
+      "actual": 40.0,
+      "pass": true
+    },
+    "nominal_energy_wh": {
+      "ref": 2072.0,
+      "actual": 2072.0,
+      "pass": true
+    },
+    "pack_resistance_ohm": {
+      "ref": 0.043750000000000004,
+      "actual": 0.04375,
+      "pass": true
+    },
+    "usable_energy_wh": {
+      "ref": 1657.6000000000001,
+      "actual": 1657.6,
+      "pass": true
+    },
+    "resistive_loss_at_40A_w": {
+      "ref": 70.0,
+      "actual": 70.0,
+      "pass": true
+    }
+  },
+  "phase4_mass_telemetry": {
+    "mass_scaling_verification": [
+      {
+        "topology": "3S8P",
+        "cells": 24,
+        "expected_mass_kg": 1.2000000000000002
+      },
+      {
+        "topology": "3S16P",
+        "cells": 48,
+        "expected_mass_kg": 2.4000000000000004
+      },
+      {
+        "topology": "3S32P",
+        "cells": 96,
+        "expected_mass_kg": 4.800000000000001
+      },
+      {
+        "topology": "6S32P",
+        "cells": 192,
+        "expected_mass_kg": 9.600000000000001
+      }
+    ],
+    "seed_cell_21700_mass": 0.07,
+    "seed_cell_mass_present": true
+  },
+  "phase5_e2e_workflow": {
+    "project_id": 75,
+    "config_14s8p_id": 54,
+    "simulation_id": 55,
+    "nominal_voltage_v": 51.8,
+    "nominal_energy_wh": 2072.0,
+    "max_temp_c": 46.939,
+    "constraints": {
+      "VOLT_NOMINAL": "pass",
+      "ENERGY_TARGET": "pass",
+      "MASS_LIMIT": "pass",
+      "CURR_CONTINUOUS": "unverified",
+      "TEMP_CELL_MAX": "pass",
+      "COST_BOM": "unverified",
+      "SOC_FLOOR": "pass"
+    },
+    "timeseries_points": 361,
+    "exported_reports": {
+      "json": {
+        "report_id": 19,
+        "filename": "battlab_config_19_20261031_073211.json"
+      },
+      "csv": {
+        "report_id": 20,
+        "filename": "battlab_timeseries_20_20261031_073211.csv"
+      },
+      "pdf": {
+        "report_id": 21,
+        "filename": "battlab_report_21_20261031_073211.pdf"
+      }
+    }
+  },
+  "phase6_environmental_duty_cycle": {
+    "environmental_matrix": {
+      "-10.0C": {
+        "ambient_temp_c": -10.0,
+        "max_temp_c": -5.611,
+        "nominal_voltage_v": 51.8,
+        "nominal_energy_wh": 2072.0
+      },
+      "0.0C": {
+        "ambient_temp_c": 0.0,
+        "max_temp_c": 2.962,
+        "nominal_voltage_v": 51.8,
+        "nominal_energy_wh": 2072.0
+      },
+      "25.0C": {
+        "ambient_temp_c": 25.0,
+        "max_temp_c": 26.306,
+        "nominal_voltage_v": 51.8,
+        "nominal_energy_wh": 2072.0
+      },
+      "40.0C": {
+        "ambient_temp_c": 40.0,
+        "max_temp_c": 40.888,
+        "nominal_voltage_v": 51.8,
+        "nominal_energy_wh": 2072.0
+      }
+    },
+    "vehicle_load_uphill": {
+      "total_mass_kg": 225.0,
+      "speed_mps": 9.7222,
+      "speed_kmh": 35.0,
+      "grade_rad": 0.049958,
+      "f_rolling_n": 26.44,
+      "f_grade_n": 110.19,
+      "f_aero_n": 27.79,
+      "f_accel_n": 0.0,
+      "f_total_n": 164.42,
+      "p_mech_w": 1598.54,
+      "p_battery_w": 1866.52,
+      "battery_current_a": 36.033,
+      "assumptions": [
+        "Lumped vehicle mass: 225.0 kg (vehicle 150.0 kg + payload 75.0 kg).",
+        "Road grade: 5.0% (2.86\u00b0).",
+        "Rolling resistance: Cr=0.0120, Aero drag: Cd=0.60, Frontal area: 0.80 m\u00b2.",
+        "Drivetrain efficiency: 88.0%, Regen recovery fraction: 65.0%.",
+        "Auxiliary load: 50.0 W at nominal bus voltage 51.8 V."
+      ]
+    },
+    "vehicle_load_downhill_regen": {
+      "total_mass_kg": 225.0,
+      "speed_mps": 9.7222,
+      "speed_kmh": 35.0,
+      "grade_rad": -0.07983,
+      "f_rolling_n": 32.99,
+      "f_grade_n": -175.96,
+      "f_aero_n": 36.47,
+      "f_accel_n": 0.0,
+      "f_total_n": -106.49,
+      "p_mech_w": -1035.34,
+      "p_battery_w": -542.21,
+      "battery_current_a": -10.467,
+      "assumptions": [
+        "Lumped vehicle mass: 225.0 kg (vehicle 150.0 kg + payload 75.0 kg).",
+        "Road grade: -8.0% (-4.57\u00b0).",
+        "Rolling resistance: Cr=0.0150, Aero drag: Cd=0.35, Frontal area: 1.80 m\u00b2.",
+        "Drivetrain efficiency: 88.0%, Regen recovery fraction: 65.0%.",
+        "Auxiliary load: 50.0 W at nominal bus voltage 51.8 V."
+      ]
+    }
+  },
+  "phase8_exports_consistency": {
+    "json_matches_db": true,
+    "csv_exported_valid": true,
+    "pdf_exported_valid": true,
+    "json_file_size": 1308,
+    "csv_file_size": 22473,
+    "pdf_file_size": 5903
+  }
+}

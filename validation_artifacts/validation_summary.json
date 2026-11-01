@@ -1,0 +1,554 @@
+{
+  "benchmark_id": "NASA_PCOE_18650_DISCHARGE_EVALUATION",
+  "provenance": {
+    "dataset": "NASA Ames PCoE Li-ion Battery Dataset (2007)",
+    "cells_evaluated": [
+      "B0005",
+      "B0006"
+    ],
+    "ambient_temp_c": 24.0,
+    "discharge_profile": "Constant Current 2.0A to cutoff"
+  },
+  "calibrated_parameters": {
+    "r0_ohm": 0.09739,
+    "r1_ohm": 0.0453,
+    "c1_farad": 1500.0,
+    "q_scale": 1.0181,
+    "q_cal_effective_ah": 1.89,
+    "ha_thermal_w_per_k": 0.0243,
+    "calibration_dataset": "Cell B0005 Cycle 1 exclusively"
+  },
+  "partitions": {
+    "electrical_calibration_b0005_cycle1": {
+      "partition_type": "CALIBRATION_FIT",
+      "sample_count": 197,
+      "metrics": {
+        "n_samples": 197,
+        "mae": 0.03757,
+        "rmse": 0.04827,
+        "mbe": -0.00261,
+        "max_error": 0.28731,
+        "r2": 0.95815,
+        "percentile_50": 0.03468,
+        "percentile_90": 0.0573,
+        "percentile_99": 0.14374,
+        "units": "V"
+      },
+      "operating_envelope_breakdown": {
+        "complete_trajectory": {
+          "n_samples": 197,
+          "mae": 0.03757,
+          "rmse": 0.04827,
+          "mbe": -0.00261,
+          "max_error": 0.28731,
+          "r2": 0.95815,
+          "percentile_50": 0.03468,
+          "percentile_90": 0.0573,
+          "percentile_99": 0.14374,
+          "units": "V"
+        },
+        "main_operating_plateau": {
+          "n_samples": 177,
+          "mae": 0.03453,
+          "rmse": 0.04141,
+          "mbe": -0.00162,
+          "max_error": 0.21065,
+          "r2": 0.95768,
+          "percentile_50": 0.03434,
+          "percentile_90": 0.05667,
+          "percentile_99": 0.10687,
+          "units": "V"
+        },
+        "cutoff_and_relaxation": {
+          "n_samples": 20,
+          "mae": 0.0645,
+          "rmse": 0.08818,
+          "mbe": -0.01131,
+          "max_error": 0.28731,
+          "r2": 0.93261,
+          "percentile_50": 0.05991,
+          "percentile_90": 0.09548,
+          "percentile_99": 0.25555,
+          "units": "V"
+        },
+        "deep_cutoff_knee_only": {
+          "n_samples": 1,
+          "mae": 0.28731,
+          "rmse": 0.28731,
+          "mbe": 0.28731,
+          "max_error": 0.28731,
+          "r2": 0.0,
+          "percentile_50": 0.28731,
+          "percentile_90": 0.28731,
+          "percentile_99": 0.28731,
+          "units": "V"
+        },
+        "post_cutoff_relaxation_only": {
+          "n_samples": 19,
+          "mae": 0.05277,
+          "rmse": 0.06196,
+          "mbe": -0.02703,
+          "max_error": 0.12015,
+          "r2": 0.96058,
+          "percentile_50": 0.05666,
+          "percentile_90": 0.089,
+          "percentile_99": 0.11522,
+          "units": "V"
+        },
+        "definition": {
+          "main_operating_plateau": "Active discharge current > 0.5A and measured terminal voltage >= 2.75V",
+          "deep_cutoff_knee": "Active discharge current > 0.5A and measured terminal voltage < 2.75V",
+          "post_cutoff_relaxation": "Current <= 0.5A after load cutoff disengagement"
+        }
+      }
+    },
+    "electrical_heldout_b0005_cycle2": {
+      "partition_type": "HELD_OUT_EVALUATION",
+      "sample_count": 196,
+      "strict_zero_leakage_metrics": {
+        "n_samples": 196,
+        "mae": 0.03824,
+        "rmse": 0.05454,
+        "mbe": -0.00141,
+        "max_error": 0.37788,
+        "r2": 0.94604,
+        "percentile_50": 0.03043,
+        "percentile_90": 0.06385,
+        "percentile_99": 0.19895,
+        "units": "V"
+      },
+      "operating_envelope_breakdown": {
+        "complete_trajectory": {
+          "n_samples": 196,
+          "mae": 0.03824,
+          "rmse": 0.05454,
+          "mbe": -0.00141,
+          "max_error": 0.37788,
+          "r2": 0.94604,
+          "percentile_50": 0.03043,
+          "percentile_90": 0.06385,
+          "percentile_99": 0.19895,
+          "units": "V"
+        },
+        "main_operating_plateau": {
+          "n_samples": 176,
+          "mae": 0.0354,
+          "rmse": 0.04492,
+          "mbe": -0.00596,
+          "max_error": 0.24563,
+          "r2": 0.94924,
+          "percentile_50": 0.03037,
+          "percentile_90": 0.06348,
+          "percentile_99": 0.12827,
+          "units": "V"
+        },
+        "cutoff_and_relaxation": {
+          "n_samples": 20,
+          "mae": 0.06325,
+          "rmse": 0.10671,
+          "mbe": 0.0387,
+          "max_error": 0.37788,
+          "r2": 0.90239,
+          "percentile_50": 0.03524,
+          "percentile_90": 0.14103,
+          "percentile_99": 0.34341,
+          "units": "V"
+        },
+        "deep_cutoff_knee_only": {
+          "n_samples": 1,
+          "mae": 0.37788,
+          "rmse": 0.37788,
+          "mbe": 0.37788,
+          "max_error": 0.37788,
+          "r2": 0.0,
+          "percentile_50": 0.37788,
+          "percentile_90": 0.37788,
+          "percentile_99": 0.37788,
+          "units": "V"
+        },
+        "post_cutoff_relaxation_only": {
+          "n_samples": 19,
+          "mae": 0.0467,
+          "rmse": 0.06686,
+          "mbe": 0.02085,
+          "max_error": 0.19649,
+          "r2": 0.95352,
+          "percentile_50": 0.03494,
+          "percentile_90": 0.1046,
+          "percentile_99": 0.1854,
+          "units": "V"
+        },
+        "definition": {
+          "main_operating_plateau": "Active discharge current > 0.5A and measured terminal voltage >= 2.75V",
+          "deep_cutoff_knee": "Active discharge current > 0.5A and measured terminal voltage < 2.75V",
+          "post_cutoff_relaxation": "Current <= 0.5A after load cutoff disengagement"
+        }
+      },
+      "capacity_scaled_diagnostic_metrics": {
+        "n_samples": 196,
+        "mae": 0.03955,
+        "rmse": 0.05225,
+        "mbe": -0.01026,
+        "max_error": 0.31231,
+        "r2": 0.95046,
+        "percentile_50": 0.03029,
+        "percentile_90": 0.06691,
+        "percentile_99": 0.13488,
+        "units": "V"
+      }
+    },
+    "electrical_heldout_b0005_cycle10": {
+      "partition_type": "HELD_OUT_EVALUATION",
+      "sample_count": 190,
+      "strict_zero_leakage_metrics": {
+        "n_samples": 190,
+        "mae": 0.04267,
+        "rmse": 0.07007,
+        "mbe": 0.00176,
+        "max_error": 0.4887,
+        "r2": 0.9124,
+        "percentile_50": 0.0234,
+        "percentile_90": 0.06808,
+        "percentile_99": 0.29204,
+        "units": "V"
+      },
+      "operating_envelope_breakdown": {
+        "complete_trajectory": {
+          "n_samples": 190,
+          "mae": 0.04267,
+          "rmse": 0.07007,
+          "mbe": 0.00176,
+          "max_error": 0.4887,
+          "r2": 0.9124,
+          "percentile_50": 0.0234,
+          "percentile_90": 0.06808,
+          "percentile_99": 0.29204,
+          "units": "V"
+        },
+        "main_operating_plateau": {
+          "n_samples": 174,
+          "mae": 0.03492,
+          "rmse": 0.05076,
+          "mbe": -0.00976,
+          "max_error": 0.3193,
+          "r2": 0.93533,
+          "percentile_50": 0.02282,
+          "percentile_90": 0.06712,
+          "percentile_99": 0.18956,
+          "units": "V"
+        },
+        "cutoff_and_relaxation": {
+          "n_samples": 16,
+          "mae": 0.12703,
+          "rmse": 0.174,
+          "mbe": 0.12703,
+          "max_error": 0.4887,
+          "r2": 0.79752,
+          "percentile_50": 0.08935,
+          "percentile_90": 0.25437,
+          "percentile_99": 0.45869,
+          "units": "V"
+        },
+        "deep_cutoff_knee_only": {
+          "n_samples": 1,
+          "mae": 0.4887,
+          "rmse": 0.4887,
+          "mbe": 0.4887,
+          "max_error": 0.4887,
+          "r2": 0.0,
+          "percentile_50": 0.4887,
+          "percentile_90": 0.4887,
+          "percentile_99": 0.4887,
+          "units": "V"
+        },
+        "post_cutoff_relaxation_only": {
+          "n_samples": 15,
+          "mae": 0.10291,
+          "rmse": 0.12795,
+          "mbe": 0.10291,
+          "max_error": 0.28867,
+          "r2": 0.86612,
+          "percentile_50": 0.08283,
+          "percentile_90": 0.20333,
+          "percentile_99": 0.27906,
+          "units": "V"
+        },
+        "definition": {
+          "main_operating_plateau": "Active discharge current > 0.5A and measured terminal voltage >= 2.75V",
+          "deep_cutoff_knee": "Active discharge current > 0.5A and measured terminal voltage < 2.75V",
+          "post_cutoff_relaxation": "Current <= 0.5A after load cutoff disengagement"
+        }
+      },
+      "capacity_scaled_diagnostic_metrics": {
+        "n_samples": 190,
+        "mae": 0.03848,
+        "rmse": 0.05421,
+        "mbe": -0.01728,
+        "max_error": 0.34627,
+        "r2": 0.94757,
+        "percentile_50": 0.02151,
+        "percentile_90": 0.07497,
+        "percentile_99": 0.15294,
+        "units": "V"
+      }
+    },
+    "electrical_heldout_b0006_cycle1_unseen_cell": {
+      "partition_type": "UNSEEN_PHYSICAL_CELL_EVALUATION",
+      "sample_count": 197,
+      "strict_zero_leakage_metrics": {
+        "n_samples": 197,
+        "mae": 0.0398,
+        "rmse": 0.04699,
+        "mbe": -0.01165,
+        "max_error": 0.23746,
+        "r2": 0.95678,
+        "percentile_50": 0.03435,
+        "percentile_90": 0.06946,
+        "percentile_99": 0.0806,
+        "units": "V"
+      },
+      "operating_envelope_breakdown": {
+        "complete_trajectory": {
+          "n_samples": 197,
+          "mae": 0.0398,
+          "rmse": 0.04699,
+          "mbe": -0.01165,
+          "max_error": 0.23746,
+          "r2": 0.95678,
+          "percentile_50": 0.03435,
+          "percentile_90": 0.06946,
+          "percentile_99": 0.0806,
+          "units": "V"
+        },
+        "main_operating_plateau": {
+          "n_samples": 193,
+          "mae": 0.03889,
+          "rmse": 0.04406,
+          "mbe": -0.01362,
+          "max_error": 0.08215,
+          "r2": 0.94873,
+          "percentile_50": 0.03435,
+          "percentile_90": 0.06926,
+          "percentile_99": 0.07795,
+          "units": "V"
+        },
+        "cutoff_and_relaxation": {
+          "n_samples": 4,
+          "mae": 0.08344,
+          "rmse": 0.12282,
+          "mbe": 0.08344,
+          "max_error": 0.23746,
+          "r2": 0.97696,
+          "percentile_50": 0.03816,
+          "percentile_90": 0.18306,
+          "percentile_99": 0.23202,
+          "units": "V"
+        },
+        "deep_cutoff_knee_only": {
+          "n_samples": 2,
+          "mae": 0.1468,
+          "rmse": 0.17254,
+          "mbe": 0.1468,
+          "max_error": 0.23746,
+          "r2": -2.61884,
+          "percentile_50": 0.1468,
+          "percentile_90": 0.21932,
+          "percentile_99": 0.23564,
+          "units": "V"
+        },
+        "post_cutoff_relaxation_only": {
+          "n_samples": 2,
+          "mae": 0.02007,
+          "rmse": 0.02007,
+          "mbe": 0.02007,
+          "max_error": 0.02018,
+          "r2": -2938526.47868,
+          "percentile_50": 0.02007,
+          "percentile_90": 0.02016,
+          "percentile_99": 0.02017,
+          "units": "V"
+        },
+        "definition": {
+          "main_operating_plateau": "Active discharge current > 0.5A and measured terminal voltage >= 2.75V",
+          "deep_cutoff_knee": "Active discharge current > 0.5A and measured terminal voltage < 2.75V",
+          "post_cutoff_relaxation": "Current <= 0.5A after load cutoff disengagement"
+        }
+      },
+      "capacity_scaled_diagnostic_metrics": {
+        "n_samples": 197,
+        "mae": 0.03756,
+        "rmse": 0.05029,
+        "mbe": 0.00169,
+        "max_error": 0.35895,
+        "r2": 0.95048,
+        "percentile_50": 0.03553,
+        "percentile_90": 0.05819,
+        "percentile_99": 0.17463,
+        "units": "V"
+      }
+    },
+    "thermal_calibration_b0005_cycle1": {
+      "partition_type": "THERMAL_CALIBRATION_FIT",
+      "target_sensor": "Casing exterior thermocouple",
+      "sample_count": 197,
+      "metrics": {
+        "n_samples": 197,
+        "mae": 0.76519,
+        "rmse": 0.89156,
+        "mbe": 0.03324,
+        "max_error": 2.36747,
+        "r2": 0.93462,
+        "percentile_50": 0.78846,
+        "percentile_90": 1.37022,
+        "percentile_99": 1.98796,
+        "units": "\u00b0C"
+      }
+    },
+    "thermal_heldout_b0005_cycle2": {
+      "partition_type": "THERMAL_HELD_OUT_EVALUATION",
+      "target_sensor": "Casing exterior thermocouple",
+      "sample_count": 196,
+      "metrics": {
+        "n_samples": 196,
+        "mae": 0.72206,
+        "rmse": 0.84432,
+        "mbe": -0.04916,
+        "max_error": 2.16518,
+        "r2": 0.93929,
+        "percentile_50": 0.73456,
+        "percentile_90": 1.35646,
+        "percentile_99": 1.80083,
+        "units": "\u00b0C"
+      }
+    },
+    "thermal_heldout_b0005_cycle10": {
+      "partition_type": "THERMAL_HELD_OUT_EVALUATION",
+      "target_sensor": "Casing exterior thermocouple",
+      "sample_count": 190,
+      "metrics": {
+        "n_samples": 190,
+        "mae": 0.69075,
+        "rmse": 0.79671,
+        "mbe": -0.0097,
+        "max_error": 1.62463,
+        "r2": 0.94458,
+        "percentile_50": 0.73274,
+        "percentile_90": 1.22198,
+        "percentile_99": 1.45833,
+        "units": "\u00b0C"
+      }
+    },
+    "thermal_heldout_b0006_cycle1": {
+      "partition_type": "THERMAL_UNSEEN_CELL_EVALUATION",
+      "target_sensor": "Casing exterior thermocouple",
+      "sample_count": 197,
+      "metrics": {
+        "n_samples": 197,
+        "mae": 0.97773,
+        "rmse": 1.103,
+        "mbe": 0.47319,
+        "max_error": 1.70337,
+        "r2": 0.89789,
+        "percentile_50": 1.0247,
+        "percentile_90": 1.65203,
+        "percentile_99": 1.69878,
+        "units": "\u00b0C"
+      }
+    },
+    "thermal_core_temperature": {
+      "status": "BLOCKED",
+      "reason": "Commercial 18650 cells have casing surface thermocouples only; no internal core sensors exist."
+    },
+    "aging_retrospective_fit_168_cycles": {
+      "partition_type": "RETROSPECTIVE_FULL_TRAJECTORY_FIT",
+      "sample_count": 168,
+      "metrics": {
+        "n_samples": 168,
+        "mae": 0.08231,
+        "rmse": 0.09447,
+        "mbe": -0.02593,
+        "max_error": 0.19415,
+        "r2": 0.75235,
+        "percentile_50": 0.0819,
+        "percentile_90": 0.14649,
+        "percentile_99": 0.17928,
+        "units": "Ah"
+      },
+      "calibrated_a_cycle": 1.9236
+    },
+    "aging_prospective_forecasts": {
+      "trained_1_to_30_forecast_31_to_168": {
+        "calibration_cycles": 30,
+        "forecast_cycles": 138,
+        "calibrated_a_cycle": 0.4724,
+        "metrics": {
+          "n_samples": 138,
+          "mae": 0.25414,
+          "rmse": 0.29239,
+          "mbe": 0.2529,
+          "max_error": 0.45603,
+          "r2": -2.14094,
+          "percentile_50": 0.27466,
+          "percentile_90": 0.43119,
+          "percentile_99": 0.45393,
+          "units": "Ah"
+        },
+        "note": "Underestimates degradation due to unmodeled lithium plating / aging knee acceleration after cycle 80-100"
+      },
+      "trained_1_to_50_forecast_51_to_168": {
+        "calibration_cycles": 50,
+        "forecast_cycles": 118,
+        "calibrated_a_cycle": 0.5732,
+        "metrics": {
+          "n_samples": 118,
+          "mae": 0.27348,
+          "rmse": 0.2969,
+          "mbe": 0.27348,
+          "max_error": 0.43192,
+          "r2": -3.96958,
+          "percentile_50": 0.29417,
+          "percentile_90": 0.40948,
+          "percentile_99": 0.43093,
+          "units": "Ah"
+        },
+        "note": "Underestimates degradation due to unmodeled lithium plating / aging knee acceleration after cycle 80-100"
+      },
+      "trained_1_to_80_forecast_81_to_168": {
+        "calibration_cycles": 80,
+        "forecast_cycles": 88,
+        "calibrated_a_cycle": 1.042,
+        "metrics": {
+          "n_samples": 88,
+          "mae": 0.23158,
+          "rmse": 0.23998,
+          "mbe": 0.23158,
+          "max_error": 0.31999,
+          "r2": -7.03986,
+          "percentile_50": 0.24168,
+          "percentile_90": 0.3043,
+          "percentile_99": 0.31982,
+          "units": "Ah"
+        },
+        "note": "Underestimates degradation due to unmodeled lithium plating / aging knee acceleration after cycle 80-100"
+      }
+    }
+  },
+  "verdicts": {
+    "verdict_1_software_integration": "ACCEPTED",
+    "verdict_2_numerical_verification": "ACCEPTED",
+    "verdict_3_electrical_public_evaluation": "VALIDATED FOR SPECIFIED CONDITIONS (CC 2.0A, 24\u00b0C, 18650 Li-ion cell)",
+    "verdict_4_thermal_surface_evaluation": "VALIDATED FOR CASING SURFACE ONLY; CORE TEMPERATURE IS BLOCKED",
+    "verdict_5_aging_validation": "PARTIALLY VALIDATED (SEI WEAR ONLY; KNEE-POINT FORECASTING BLOCKED)",
+    "verdict_6_intended_hardware_physical_validation": "BLOCKED \u2014 CONTROLLED LABORATORY MEASUREMENTS REQUIRED"
+  },
+  "figures": [
+    "validation_artifacts/figures/fig1_b0005_cycle1_calibration_fit.png",
+    "validation_artifacts/figures/fig2_b0005_cycle2_heldout_voltage.png",
+    "validation_artifacts/figures/fig3_b0006_independent_cell_heldout.png",
+    "validation_artifacts/figures/fig4_thermal_surface_temp_comparison.png",
+    "validation_artifacts/figures/fig5_b0005_168_cycles_capacity_fade_aging.png",
+    "validation_artifacts/figures/fig6_deep_cutoff_residual_audit.png",
+    "validation_artifacts/figures/fig7_prospective_aging_forecast.png"
+  ],
+  "timestamp": "2026-10-31T14:59:36.441633Z"
+}

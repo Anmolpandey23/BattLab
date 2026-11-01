@@ -1,0 +1,61 @@
+{
+  "dataset_name": "NASA Ames Prognostics Center of Excellence (PCoE) Li-ion Battery Dataset",
+  "authors": "B. Saha and K. Goebel",
+  "year": 2007,
+  "source_url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+  "direct_download_archive": "https://phm-datasets.s3.amazonaws.com/NASA/5.+Battery+Data+Set.zip",
+  "license": "NASA Open Source Agreement / Public Domain PHM Data Repository",
+  "test_cell_specification": {
+    "cell_type": "Commercial 18650 Cylindrical Li-ion",
+    "cathode": "LiCoO2 / NMC baseline",
+    "rated_capacity_ah": 2.0,
+    "charge_cutoff_v": 4.2,
+    "discharge_cutoff_v": 2.7,
+    "cycling_profile": "CC-CV charge at 1.5A to 4.2V; CC discharge at 2.0A to cutoff; 24\u00b0C ambient chamber"
+  },
+  "raw_archives": [
+    {
+      "path": "data/nasa_pcoe/B0005.mat",
+      "size_bytes": 15956874,
+      "sha256": "0eae4585baf3f200c09fe24c5ab884f1889679fc75206ca1aa19da704104f0b0"
+    },
+    {
+      "path": "data/nasa_pcoe/B0006.mat",
+      "size_bytes": 16028159,
+      "sha256": "fa818ab4db5db8ab21e910b6dd6c3e20d3761bb9672089e1a4de8f96074616c5"
+    },
+    {
+      "path": "data/nasa_pcoe/README.txt",
+      "size_bytes": 2834,
+      "sha256": "2b0614ccfdde3ca9c0466ad3e0c03903a1dbe98aec22dbe7ea410219cde51f90"
+    }
+  ],
+  "canonical_csv_exports": [
+    {
+      "path": "data/nasa_pcoe/nasa_b0005_cycle01_calibration.csv",
+      "size_bytes": 7279,
+      "sha256": "8598fea112d43e3d864688c4c7fd4b942e74b375259be18bbc2ae56521707b42"
+    },
+    {
+      "path": "data/nasa_pcoe/nasa_b0005_cycle02_heldout.csv",
+      "size_bytes": 7242,
+      "sha256": "d24847646daa17ad7b3a5192ab1489ac4d3e446c5ee391c82c0342fe4545fecc"
+    },
+    {
+      "path": "data/nasa_pcoe/nasa_b0005_cycle10_heldout.csv",
+      "size_bytes": 7020,
+      "sha256": "ec94a5b1e0de2ec53436ddb963ee8fd7b8284a5ad44f09638b00514f7ab33d90"
+    },
+    {
+      "path": "data/nasa_pcoe/nasa_b0006_cycle01_heldout_cell.csv",
+      "size_bytes": 7279,
+      "sha256": "fe19c4b48f9ee64ce6580b1da3c5820d5cb5af9e4ff5dac6e1b412ace8f329b3"
+    },
+    {
+      "path": "data/nasa_pcoe/nasa_b0005_aging_capacity_trajectory.csv",
+      "size_bytes": 2968,
+      "sha256": "0c0f9b4c60f01cf664001fc8d4424ffb51da9c38b6a1b7effcf6858da5c4beb3"
+    }
+  ],
+  "generated_at": "2026-10-31T14:59:36.440859Z"
+}

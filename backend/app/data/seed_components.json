@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Generic BMS 14S (Illustrative)",
+    "component_type": "BMS",
+    "manufacturer": "Illustrative",
+    "model": "BMS-14S-60A",
+    "max_voltage_v": 58.8,
+    "max_current_a": 60.0,
+    "mass_kg": 0.5,
+    "unit_cost_usd": null,
+    "source_notes": "PROVISIONAL ILLUSTRATIVE DATA. Not from a real datasheet.",
+    "data_status": "provisional",
+    "is_seed": true
+  },
+  {
+    "name": "Generic Fuse 80A (Illustrative)",
+    "component_type": "Fuse",
+    "manufacturer": "Illustrative",
+    "model": "FUSE-80A-60V",
+    "max_voltage_v": 60.0,
+    "max_current_a": 80.0,
+    "mass_kg": 0.05,
+    "unit_cost_usd": null,
+    "source_notes": "PROVISIONAL ILLUSTRATIVE DATA.",
+    "data_status": "provisional",
+    "is_seed": true
+  },
+  {
+    "name": "Small Cooling Fan (Illustrative)",
+    "component_type": "Fan",
+    "manufacturer": "Illustrative",
+    "model": "FAN-12V-10W",
+    "mass_kg": 0.15,
+    "unit_cost_usd": null,
+    "aux_power_w": 10.0,
+    "thermal_conductance_w_per_k": null,
+    "source_notes": "PROVISIONAL: aux power 10 W illustrative. Actual cooling conductance depends on airflow path and must be measured or CFD-modelled.",
+    "data_status": "provisional",
+    "is_seed": true
+  },
+  {
+    "name": "Aluminium Busbar Set (Illustrative)",
+    "component_type": "Busbar",
+    "manufacturer": "Illustrative",
+    "model": "BB-AL-14S",
+    "max_current_a": 100.0,
+    "mass_kg": 0.3,
+    "unit_cost_usd": null,
+    "source_notes": "PROVISIONAL ILLUSTRATIVE DATA.",
+    "data_status": "provisional",
+    "is_seed": true
+  }
+]

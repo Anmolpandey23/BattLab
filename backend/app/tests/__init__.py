@@ -1,0 +1,1 @@
+"""BattLab backend tests init"""
