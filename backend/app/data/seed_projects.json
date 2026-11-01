@@ -1,0 +1,805 @@
+[
+  {
+    "name": "Illustrative 48V-Class EV Battery Prototype",
+    "description": "Demo project: electric scooter-style battery design exercise. All specifications and results are illustrative only. Target: ~51.8V nominal, ~4000 Wh nominal energy, ≤25 kg.",
+    "application_category": "ev_scooter",
+    "engineer_label": "BattLab Demo",
+    "design_version": "0.1",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 51.8,
+      "target_energy_wh": 4000.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 40.0,
+      "peak_current_a": 80.0,
+      "peak_duration_s": 30.0,
+      "max_mass_kg": 25.0,
+      "min_ambient_temp_c": -10.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "passive",
+      "design_notes": "14S8P per module (112 cells), two modules in parallel for 14S16P."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 14S16P Passive",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 14,
+        "np": 16,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.80,
+        "is_baseline": true,
+        "notes": "14S16P configuration. Nominal: 51.8V, 80Ah, 4144Wh."
+      },
+      {
+        "label": "Alternative A — 14S16P Fan-Assisted",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "manual",
+        "ns": 14,
+        "np": 16,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.80,
+        "is_baseline": false,
+        "notes": "Same 14S16P topology with active fan cooling."
+      },
+      {
+        "label": "Alternative B — 13S17P (Reduced Voltage)",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "manual",
+        "ns": 13,
+        "np": 17,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.80,
+        "is_baseline": false,
+        "notes": "13S17P: 48.1V, 85Ah, 4089Wh. Higher current delivery."
+      }
+    ]
+  },
+  {
+    "name": "Tesla Model 3 Long Range 355V Architecture",
+    "description": "High-efficiency EV sedan powertrain architecture with 96S46P cylindrical cells and dual-surface liquid cooling channels.",
+    "application_category": "ev_car",
+    "engineer_label": "Powertrain Engineering",
+    "design_version": "1.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 355.2,
+      "target_energy_wh": 78000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 250.0,
+      "peak_current_a": 850.0,
+      "peak_duration_s": 10.0,
+      "max_mass_kg": 460.0,
+      "min_ambient_temp_c": -20.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "liquid",
+      "design_notes": "400V class architecture. Snake cooling ribbon between cylindrical rows."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 96S46P Liquid-Cooled",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 96,
+        "np": 46,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "4416 cells total, 355.2V nominal, 230Ah capacity, 81.7 kWh gross."
+      },
+      {
+        "label": "Alternative A — 96S44P Lightweight",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "manual",
+        "ns": 96,
+        "np": 44,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.88,
+        "is_baseline": false,
+        "notes": "Reduced mass configuration with expanded usable SoC window."
+      }
+    ]
+  },
+  {
+    "name": "Porsche Taycan 800V Hypercar Architecture",
+    "description": "Ultra-fast charging 800V dual-deck sports saloon architecture for continuous 350kW DC fast charging capability.",
+    "application_category": "ev_car",
+    "engineer_label": "High-Voltage Systems",
+    "design_version": "2.1",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 725.0,
+      "target_energy_wh": 93000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 350.0,
+      "peak_current_a": 1100.0,
+      "peak_duration_s": 8.0,
+      "max_mass_kg": 540.0,
+      "min_ambient_temp_c": -15.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "liquid",
+      "design_notes": "800V system topology with bottom-plate dielectric liquid heat exchanger."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 198S2P Pouch 800V",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 198,
+        "np": 2,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "396 large-format pouch cells with bottom cold-plate cooling."
+      }
+    ]
+  },
+  {
+    "name": "Formula E Gen3 Rapid-Discharge Pod",
+    "description": "FIA Formula E championship specification battery pod: 600kW maximum regeneration and 350kW tractive power delivery.",
+    "application_category": "custom",
+    "engineer_label": "Motorsport Dynamics",
+    "design_version": "3.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 470.0,
+      "target_energy_wh": 47000.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 400.0,
+      "peak_current_a": 1200.0,
+      "peak_duration_s": 5.0,
+      "max_mass_kg": 284.0,
+      "min_ambient_temp_c": 5.0,
+      "max_ambient_temp_c": 55.0,
+      "cooling_preference": "liquid",
+      "design_notes": "High specific-power pack meeting strict FIA safety homologation."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 130S8P High-Power NMC",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 130,
+        "np": 8,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.95,
+        "is_baseline": true,
+        "notes": "1040 cells in carbon-composite structural casing."
+      }
+    ]
+  },
+  {
+    "name": "Urban Commuter 36V E-Bike Pack",
+    "description": "Downtube-integrated lightweight pedelec battery for daily city commuting with integrated smart BMS.",
+    "application_category": "ev_bicycle",
+    "engineer_label": "Micromobility Group",
+    "design_version": "1.2",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 36.0,
+      "target_energy_wh": 430.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 15.0,
+      "peak_current_a": 25.0,
+      "peak_duration_s": 15.0,
+      "max_mass_kg": 3.2,
+      "min_ambient_temp_c": -10.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "passive",
+      "design_notes": "Designed for waterproof IP67 aluminium extrusion enclosure."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 10S4P Compact 18650",
+        "cell_model": "ILL-18650-3P",
+        "design_mode": "requirements_first",
+        "ns": 10,
+        "np": 4,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "40 cells, 36.0V nominal, 12Ah capacity, 432Wh nominal energy."
+      }
+    ]
+  },
+  {
+    "name": "Cargo Delivery E-Bike 48V Heavy-Duty Pack",
+    "description": "Commercial last-mile logistics cargo bike pack for heavy payload courier routes with dual-battery switching.",
+    "application_category": "ev_bicycle",
+    "engineer_label": "Fleet Engineering",
+    "design_version": "2.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 48.1,
+      "target_energy_wh": 1400.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 35.0,
+      "peak_current_a": 65.0,
+      "peak_duration_s": 20.0,
+      "max_mass_kg": 9.5,
+      "min_ambient_temp_c": -15.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "fan",
+      "design_notes": "Reinforced steel mounting plate with anti-theft key lock."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 13S6P High-Capacity 21700",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 13,
+        "np": 6,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "78 cells, 48.1V nominal, 30Ah, 1.44 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "City Delivery Van 400V Modular Pack",
+    "description": "Urban delivery commercial van battery pack with safe, durable LFP chemistry for 4,000+ lifecycle durability.",
+    "application_category": "ev_car",
+    "engineer_label": "Commercial Fleet",
+    "design_version": "1.5",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 345.0,
+      "target_energy_wh": 25000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 120.0,
+      "peak_current_a": 280.0,
+      "peak_duration_s": 20.0,
+      "max_mass_kg": 260.0,
+      "min_ambient_temp_c": -10.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "fan",
+      "design_notes": "LFP 26650 cylindrical pack optimized for total cost of ownership."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 108S24P LFP Pack",
+        "cell_model": "ILL-LFP-26650-3P",
+        "design_mode": "requirements_first",
+        "ns": 108,
+        "np": 24,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "2592 cells, 345.6V nominal, 72Ah, 24.8 kWh energy."
+      }
+    ]
+  },
+  {
+    "name": "Heavy Duty Class-8 Haulage 750V Truck",
+    "description": "Long-haul tractor trailer zero-emission powertrain with 600+ kWh gross capacity and 800kW megawatt charging capability.",
+    "application_category": "ev_car",
+    "engineer_label": "Heavy Commercial Group",
+    "design_version": "1.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 690.0,
+      "target_energy_wh": 620000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 650.0,
+      "peak_current_a": 1400.0,
+      "peak_duration_s": 30.0,
+      "max_mass_kg": 3800.0,
+      "min_ambient_temp_c": -25.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "liquid",
+      "design_notes": "Chassis-rail mounted side packs with dual loop glycol-water cooling."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 216S60P LFP Megapack",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 216,
+        "np": 60,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.88,
+        "is_baseline": true,
+        "notes": "12960 large pouch cells, 691.2V nominal, 3000Ah, 622.1 kWh."
+      }
+    ]
+  },
+  {
+    "name": "Urban Transit 600V Electric Bus Pack",
+    "description": "Standard 12-meter city bus roof and rear-mounted battery pack engineered for daily opportunity pantograph charging.",
+    "application_category": "ev_car",
+    "engineer_label": "Transit Mobility",
+    "design_version": "2.2",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 576.0,
+      "target_energy_wh": 460000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 450.0,
+      "peak_current_a": 900.0,
+      "peak_duration_s": 25.0,
+      "max_mass_kg": 2900.0,
+      "min_ambient_temp_c": -20.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "liquid",
+      "design_notes": "Roof-mounted split pods with high fire-containment isolation."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 180S50P Transit LFP",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 180,
+        "np": 50,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "9000 pouch cells, 576.0V nominal, 2500Ah, 460.8 kWh."
+      }
+    ]
+  },
+  {
+    "name": "eVTOL Air Taxi High-C Peak Discharge Pod",
+    "description": "Urban air mobility 4-passenger aircraft battery pack engineered for 12C vertical takeoff and landing burst power.",
+    "application_category": "aerospace",
+    "engineer_label": "Aero Propulsion",
+    "design_version": "1.1",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 576.0,
+      "target_energy_wh": 24000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 200.0,
+      "peak_current_a": 650.0,
+      "peak_duration_s": 60.0,
+      "max_mass_kg": 150.0,
+      "min_ambient_temp_c": -30.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "liquid",
+      "design_notes": "FAA DO-311A compliance: quad redundant thermal runaway containment."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 160S12P NCA Aero Pod",
+        "cell_model": "ILL-NCA-18650",
+        "design_mode": "requirements_first",
+        "ns": 160,
+        "np": 12,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.92,
+        "is_baseline": true,
+        "notes": "1920 high specific-energy NCA cells, 576.0V, 42Ah, 24.2 kWh."
+      }
+    ]
+  },
+  {
+    "name": "Stratospheric Solar-Electric UAV High-Altitude Pack",
+    "description": "Ultra-lightweight high-altitude pseudo-satellite (HAPS) battery for overnight endurance flights at 65,000 ft.",
+    "application_category": "aerospace",
+    "engineer_label": "Special Mission Projects",
+    "design_version": "0.9",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 259.0,
+      "target_energy_wh": 3600.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 18.0,
+      "peak_current_a": 35.0,
+      "peak_duration_s": 45.0,
+      "max_mass_kg": 22.0,
+      "min_ambient_temp_c": -60.0,
+      "max_ambient_temp_c": 25.0,
+      "cooling_preference": "passive",
+      "design_notes": "Aerogel vacuum thermal insulation with embedded resistive heaters for -60C ambient."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 72S4P Aero NCA",
+        "cell_model": "ILL-NCA-18650",
+        "design_mode": "requirements_first",
+        "ns": 72,
+        "np": 4,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.88,
+        "is_baseline": true,
+        "notes": "288 cells, 259.2V nominal, 14Ah, 3.63 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Solar Commercial BESS 1.2MWh Megapack",
+    "description": "Utility-scale grid stabilization and peak-shaving battery energy storage system with integrated bi-directional inverter.",
+    "application_category": "stationary",
+    "engineer_label": "Grid Infrastructure",
+    "design_version": "1.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 1024.0,
+      "target_energy_wh": 1300000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 800.0,
+      "peak_current_a": 1600.0,
+      "peak_duration_s": 60.0,
+      "max_mass_kg": 9500.0,
+      "min_ambient_temp_c": -20.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "liquid",
+      "design_notes": "Containerized outdoor enclosure with integrated HVAC and deflagration vents."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 320S80P Utility BESS",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 320,
+        "np": 80,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "25600 pouch cells, 1024.0V nominal, 4000Ah, 1.31 MWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Residential Powerwall 48V Energy Storage",
+    "description": "Home solar rooftop self-consumption battery unit with 10-year warranty cycle life and seamless microgrid transfer.",
+    "application_category": "stationary",
+    "engineer_label": "Consumer Energy",
+    "design_version": "2.4",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 51.2,
+      "target_energy_wh": 1840.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 35.0,
+      "peak_current_a": 70.0,
+      "peak_duration_s": 10.0,
+      "max_mass_kg": 26.0,
+      "min_ambient_temp_c": -10.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "passive",
+      "design_notes": "Wall-mounted natural convection chassis with UL9540A certification."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 16S12P Residential LFP",
+        "cell_model": "ILL-LFP-26650-3P",
+        "design_mode": "requirements_first",
+        "ns": 16,
+        "np": 12,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "192 cells, 51.2V nominal, 36Ah, 1.84 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Telecom Remote Tower 48V Backup Array",
+    "description": "Ruggedized 5G cellular base station emergency backup battery system with remote SNMP telemetry supervision.",
+    "application_category": "stationary",
+    "engineer_label": "Telecom Systems",
+    "design_version": "1.1",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 48.0,
+      "target_energy_wh": 2880.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 50.0,
+      "peak_current_a": 80.0,
+      "peak_duration_s": 30.0,
+      "max_mass_kg": 40.0,
+      "min_ambient_temp_c": -15.0,
+      "max_ambient_temp_c": 55.0,
+      "cooling_preference": "fan",
+      "design_notes": "19-inch 4U server rack mount enclosure with hot-swappable trays."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 15S20P Telecom Array",
+        "cell_model": "ILL-LFP-26650-3P",
+        "design_mode": "requirements_first",
+        "ns": 15,
+        "np": 20,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "300 cells, 48.0V nominal, 60Ah, 2.88 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Electric Hydrofoil 400V High-Speed Marine Pack",
+    "description": "Watertight IP68 marine hull battery with saltwater cooling heat exchanger for 30-knot passenger hydrofoil.",
+    "application_category": "marine",
+    "engineer_label": "Marine Electrification",
+    "design_version": "1.3",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 407.0,
+      "target_energy_wh": 32000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 120.0,
+      "peak_current_a": 320.0,
+      "peak_duration_s": 25.0,
+      "max_mass_kg": 240.0,
+      "min_ambient_temp_c": 0.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "liquid",
+      "design_notes": "Sealed double-wall anodized marine aluminium hull compartment."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 110S16P Marine NMC",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 110,
+        "np": 16,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "1760 cells, 407.0V nominal, 80Ah, 32.5 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Offshore Electric Ferry 800V Propulsion System",
+    "description": "Zero-emission coastal car and passenger ferry propulsion bank with 2MW shore automated suction charging.",
+    "application_category": "marine",
+    "engineer_label": "Naval Architecture",
+    "design_version": "2.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 768.0,
+      "target_energy_wh": 610000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 700.0,
+      "peak_current_a": 1500.0,
+      "peak_duration_s": 45.0,
+      "max_mass_kg": 4200.0,
+      "min_ambient_temp_c": -10.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "liquid",
+      "design_notes": "DNV-GL Type Approval compliant battery room with inert gas suppression."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 240S40P Ferry Propulsion",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 240,
+        "np": 40,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "9600 pouch cells, 768.0V nominal, 2000Ah, 614.4 kWh energy."
+      }
+    ]
+  },
+  {
+    "name": "Isle of Man TT Zero Racing Superbike",
+    "description": "Mountain Course electric racing superbike pack designed for 120+ mph average speed over 37.73 miles.",
+    "application_category": "custom",
+    "engineer_label": "Racing Team",
+    "design_version": "3.1",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 130.0,
+      "target_energy_wh": 4500.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 90.0,
+      "peak_current_a": 250.0,
+      "peak_duration_s": 12.0,
+      "max_mass_kg": 32.0,
+      "min_ambient_temp_c": 10.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "fan",
+      "design_notes": "Structural carbon fibre monocoque serving as motorcycle chassis stressed member."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 36S10P Superbike NCA",
+        "cell_model": "ILL-NCA-18650",
+        "design_mode": "requirements_first",
+        "ns": 36,
+        "np": 10,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.95,
+        "is_baseline": true,
+        "notes": "360 cells, 129.6V nominal, 35Ah, 4.54 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Formula Student Electric (FSE) 400V Racer",
+    "description": "Formula SAE Electric competition race car accumulator with maximum 80kW power cap and sub-2.5s 0-100 km/h acceleration.",
+    "application_category": "custom",
+    "engineer_label": "University Racing Team",
+    "design_version": "2.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 345.0,
+      "target_energy_wh": 7200.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 110.0,
+      "peak_current_a": 230.0,
+      "peak_duration_s": 10.0,
+      "max_mass_kg": 48.0,
+      "min_ambient_temp_c": 15.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "fan",
+      "design_notes": "Formula SAE rules compliant: 6 modular segments under 12kg each."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 96S6P FSE Racer",
+        "cell_model": "ILL-NCA-18650",
+        "design_mode": "requirements_first",
+        "ns": 96,
+        "np": 6,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "576 cells, 345.6V nominal, 21Ah, 7.26 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Autonomous Mobile Robot (AMR) Warehouse AGV",
+    "description": "Industrial automated guided vehicle pack for 24/7 fulfillment warehouse operations with wireless induction charging pads.",
+    "application_category": "custom",
+    "engineer_label": "Robotics Platform",
+    "design_version": "1.4",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 25.2,
+      "target_energy_wh": 600.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 20.0,
+      "peak_current_a": 45.0,
+      "peak_duration_s": 15.0,
+      "max_mass_kg": 6.5,
+      "min_ambient_temp_c": 0.0,
+      "max_ambient_temp_c": 40.0,
+      "cooling_preference": "passive",
+      "design_notes": "Quick-swap mechanical cartridge latch for zero-downtime robot turnaround."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 7S8P AMR Pack",
+        "cell_model": "ILL-18650-3P",
+        "design_mode": "requirements_first",
+        "ns": 7,
+        "np": 8,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "56 cells, 25.2V nominal, 24Ah, 605Wh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Heavy Underground Mining Hauler Pack",
+    "description": "Explosion-proof ATEX-rated 900V traction pack for underground zero-emission ore haulage in harsh subterranean conditions.",
+    "application_category": "custom",
+    "engineer_label": "Mining Equipment",
+    "design_version": "1.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 896.0,
+      "target_energy_wh": 890000.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 850.0,
+      "peak_current_a": 1800.0,
+      "peak_duration_s": 40.0,
+      "max_mass_kg": 6200.0,
+      "min_ambient_temp_c": 5.0,
+      "max_ambient_temp_c": 50.0,
+      "cooling_preference": "liquid",
+      "design_notes": "Armored stainless steel enclosure resisting 50g shock impacts."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 280S20P Mining LFP",
+        "cell_model": "ILL-LFP-POUCH-50",
+        "design_mode": "requirements_first",
+        "ns": 280,
+        "np": 20,
+        "cooling_type": "liquid",
+        "usable_soc_window": 0.85,
+        "is_baseline": true,
+        "notes": "5600 pouch cells, 896.0V nominal, 1000Ah, 896.0 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Sub-Zero Arctic Exploration Rover Pack",
+    "description": "Specialized polar research vehicle battery system with internal phase change materials and heated thermal jackets.",
+    "application_category": "custom",
+    "engineer_label": "Extreme Environment",
+    "design_version": "1.0",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 88.8,
+      "target_energy_wh": 4400.0,
+      "energy_is_usable": true,
+      "continuous_current_a": 40.0,
+      "peak_current_a": 90.0,
+      "peak_duration_s": 25.0,
+      "max_mass_kg": 35.0,
+      "min_ambient_temp_c": -45.0,
+      "max_ambient_temp_c": 20.0,
+      "cooling_preference": "fan",
+      "design_notes": "Vacuum insulated dewar enclosure with pre-heating PTC elements."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 24S10P Arctic Rover",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 24,
+        "np": 10,
+        "cooling_type": "fan",
+        "usable_soc_window": 0.80,
+        "is_baseline": true,
+        "notes": "240 cells, 88.8V nominal, 50Ah, 4.44 kWh gross energy."
+      }
+    ]
+  },
+  {
+    "name": "Electric Motocross MX-E 72V Monocoque",
+    "description": "Competition electric dirt bike battery pack with high vibration resistance and 50kW peak motor drive burst.",
+    "application_category": "ev_scooter",
+    "engineer_label": "Off-Road Powertrain",
+    "design_version": "2.2",
+    "units": "SI",
+    "is_demo": true,
+    "requirement": {
+      "target_voltage_v": 74.0,
+      "target_energy_wh": 2900.0,
+      "energy_is_usable": false,
+      "continuous_current_a": 60.0,
+      "peak_current_a": 160.0,
+      "peak_duration_s": 15.0,
+      "max_mass_kg": 20.0,
+      "min_ambient_temp_c": -5.0,
+      "max_ambient_temp_c": 45.0,
+      "cooling_preference": "passive",
+      "design_notes": "Potted silicon thermal gel packaging for IP69K mud and high-pressure jet washing."
+    },
+    "configurations": [
+      {
+        "label": "Baseline — 20S8P Motocross Pack",
+        "cell_model": "ILL-21700-5P",
+        "design_mode": "requirements_first",
+        "ns": 20,
+        "np": 8,
+        "cooling_type": "passive",
+        "usable_soc_window": 0.90,
+        "is_baseline": true,
+        "notes": "160 cells, 74.0V nominal, 40Ah, 2.96 kWh gross energy."
+      }
+    ]
+  }
+]

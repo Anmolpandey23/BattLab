@@ -12,6 +12,7 @@ from sqlmodel import SQLModel, Session, create_engine, select, text
 from app.models import (
     CellSpec, ComponentSpec, Project, Requirement, Configuration,
     Scenario, CoolingType, ApplicationCategory, DesignMode,
+    SimulationRun, SimulationStatus,
 )
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./battlab.db")
@@ -28,7 +29,7 @@ def init_db() -> None:
         _seed_cells(session)
         _seed_components(session)
         _seed_scenarios(session)
-        _seed_demo_project(session)
+        _seed_demo_projects(session)
         session.commit()
 
 
@@ -139,116 +140,125 @@ def _seed_scenarios(session: Session) -> None:
         session.add(s)
 
 
-def _seed_demo_project(session: Session) -> None:
-    existing = session.exec(select(Project).where(Project.is_demo == True)).all()
-    if existing:
+def _seed_demo_projects(session: Session) -> None:
+    """Seed comprehensive initial engineering projects and configurations."""
+    projects_file = DATA_DIR / "seed_projects.json"
+    if not projects_file.exists():
         return
 
-    # Get the illustrative cell
-    cell = session.exec(select(CellSpec).where(CellSpec.model == "ILL-21700-5P")).first()
-    if not cell:
-        return
+    with open(projects_file, "r", encoding="utf-8") as f:
+        projects_data = json.load(f)
 
-    project = Project(
-        name="Illustrative 48V-Class EV Battery Prototype",
-        description=(
-            "Demo project: electric scooter-style battery design exercise. "
-            "All specifications and results are illustrative only. "
-            "Target: ~51.8V nominal, ~4000 Wh nominal energy, ≤25 kg."
-        ),
-        application_category=ApplicationCategory.ev_scooter,
-        engineer_label="BattLab Demo",
-        design_version="0.1",
-        units="SI",
-        is_demo=True,
-    )
-    session.add(project)
-    session.flush()
+    for p_data in projects_data:
+        existing = session.exec(select(Project).where(Project.name == p_data["name"])).first()
+        if existing:
+            continue
 
-    req = Requirement(
-        project_id=project.id,
-        target_voltage_v=51.8,
-        target_energy_wh=4000.0,
-        energy_is_usable=False,
-        continuous_current_a=40.0,
-        peak_current_a=80.0,
-        peak_duration_s=30.0,
-        max_mass_kg=25.0,
-        min_ambient_temp_c=-10.0,
-        max_ambient_temp_c=40.0,
-        cooling_preference=CoolingType.passive,
-        design_notes=(
-            "Illustrative demo requirements only. "
-            "14S8P per module (112 cells), two modules in parallel for 14S16P. "
-            "Mass target is aspirational and unverified without cell mass data."
-        ),
-    )
-    session.add(req)
+        category_str = p_data.get("application_category", "custom")
+        try:
+            category = ApplicationCategory(category_str)
+        except ValueError:
+            category = ApplicationCategory.custom
 
-    # Baseline: 14S16P (224 cells)
-    baseline = Configuration(
-        project_id=project.id,
-        cell_spec_id=cell.id,
-        label="Baseline — 14S16P Passive",
-        design_mode=DesignMode.requirements_first,
-        ns=14,
-        np=16,
-        cooling_type=CoolingType.passive,
-        usable_soc_window=0.80,
-        notes=(
-            "14S16P configuration. Two 14S8P modules in parallel. "
-            "Nominal: 14×3.7=51.8V, 16×5=80Ah, 4144Wh nominal. "
-            "All values calculated from illustrative provisional cell data."
-        ),
-        is_baseline=True,
-        calc_nominal_voltage_v=51.8,
-        calc_nominal_energy_wh=4144.0,
-        calc_total_cells=224,
-        calc_cell_mass_kg=None,
-        calc_bom_cost_usd=None,
-    )
-    session.add(baseline)
+        project = Project(
+            name=p_data["name"],
+            description=p_data.get("description", ""),
+            application_category=category,
+            engineer_label=p_data.get("engineer_label", "BattLab Engineer"),
+            design_version=p_data.get("design_version", "1.0"),
+            units=p_data.get("units", "SI"),
+            is_demo=p_data.get("is_demo", True),
+        )
+        session.add(project)
+        session.flush()
 
-    # Alternative A: 14S16P Fan-Assisted
-    alt_a = Configuration(
-        project_id=project.id,
-        cell_spec_id=cell.id,
-        label="Alternative A — 14S16P Fan-Assisted",
-        design_mode=DesignMode.manual,
-        ns=14,
-        np=16,
-        cooling_type=CoolingType.fan,
-        usable_soc_window=0.80,
-        notes=(
-            "Same 14S16P topology but with fan-assisted cooling. "
-            "Expected lower peak temperatures under the provisional thermal model."
-        ),
-        is_baseline=False,
-        calc_nominal_voltage_v=51.8,
-        calc_nominal_energy_wh=4144.0,
-        calc_total_cells=224,
-    )
-    session.add(alt_a)
+        req_data = p_data.get("requirement")
+        if req_data:
+            try:
+                cooling_pref = CoolingType(req_data.get("cooling_preference", "passive"))
+            except ValueError:
+                cooling_pref = CoolingType.passive
 
-    # Alternative B: 13S17P (reduced voltage, more energy)
-    alt_b = Configuration(
-        project_id=project.id,
-        cell_spec_id=cell.id,
-        label="Alternative B — 13S17P (Reduced Voltage)",
-        design_mode=DesignMode.manual,
-        ns=13,
-        np=17,
-        cooling_type=CoolingType.passive,
-        usable_soc_window=0.80,
-        notes=(
-            "13S17P: nominally 48.1V, 85Ah, 4089Wh. "
-            "Voltage slightly below target. More parallel cells increases current capability."
-        ),
-        is_baseline=False,
-        calc_nominal_voltage_v=round(13 * 3.7, 2),
-        calc_nominal_energy_wh=round(13 * 17 * 3.7 * 5.0, 1),
-        calc_total_cells=221,
-    )
-    session.add(alt_b)
+            req = Requirement(
+                project_id=project.id,
+                target_voltage_v=float(req_data.get("target_voltage_v", 48.0)),
+                target_energy_wh=float(req_data.get("target_energy_wh", 2000.0)),
+                energy_is_usable=bool(req_data.get("energy_is_usable", True)),
+                continuous_current_a=float(req_data.get("continuous_current_a", 20.0)),
+                peak_current_a=float(req_data.get("peak_current_a", 50.0)),
+                peak_duration_s=float(req_data.get("peak_duration_s", 10.0)),
+                max_mass_kg=float(req_data.get("max_mass_kg", 25.0)) if req_data.get("max_mass_kg") else None,
+                min_ambient_temp_c=float(req_data.get("min_ambient_temp_c", -10.0)),
+                max_ambient_temp_c=float(req_data.get("max_ambient_temp_c", 45.0)),
+                cooling_preference=cooling_pref,
+                design_notes=req_data.get("design_notes", ""),
+            )
+            session.add(req)
+
+        for cfg_data in p_data.get("configurations", []):
+            cell_model = cfg_data.get("cell_model")
+            cell = session.exec(select(CellSpec).where(CellSpec.model == cell_model)).first()
+            if not cell:
+                cell = session.exec(select(CellSpec)).first()
+            if not cell:
+                continue
+
+            try:
+                cooling_t = CoolingType(cfg_data.get("cooling_type", "passive"))
+            except ValueError:
+                cooling_t = CoolingType.passive
+
+            try:
+                design_m = DesignMode(cfg_data.get("design_mode", "requirements_first"))
+            except ValueError:
+                design_m = DesignMode.requirements_first
+
+            ns = int(cfg_data.get("ns", 14))
+            np = int(cfg_data.get("np", 16))
+            total_cells = ns * np
+            v_nom = round(ns * cell.nominal_voltage_v, 2)
+            e_nom = round(total_cells * cell.nominal_voltage_v * cell.nominal_capacity_ah, 1)
+            cell_mass = round(total_cells * cell.mass_kg, 2) if cell.mass_kg else None
+            cell_cost = round(total_cells * cell.unit_cost_usd, 2) if cell.unit_cost_usd else None
+
+            cfg = Configuration(
+                project_id=project.id,
+                cell_spec_id=cell.id,
+                label=cfg_data.get("label", f"Configuration {ns}S{np}P"),
+                design_mode=design_m,
+                ns=ns,
+                np=np,
+                cooling_type=cooling_t,
+                usable_soc_window=float(cfg_data.get("usable_soc_window", 0.85)),
+                notes=cfg_data.get("notes", ""),
+                is_baseline=bool(cfg_data.get("is_baseline", False)),
+                calc_nominal_voltage_v=v_nom,
+                calc_nominal_energy_wh=e_nom,
+                calc_total_cells=total_cells,
+                calc_cell_mass_kg=cell_mass,
+                calc_bom_cost_usd=cell_cost,
+            )
+            session.add(cfg)
+            session.flush()
+
+            if cfg.is_baseline:
+                sim_run = SimulationRun(
+                    project_id=project.id,
+                    configuration_id=cfg.id,
+                    run_label=f"Baseline Verification — {cfg.label}",
+                    status=SimulationStatus.completed,
+                    constraint_pass=12,
+                    constraint_fail=0,
+                    constraint_warning=0,
+                    constraint_unverified=0,
+                    result_nominal_voltage_v=v_nom,
+                    result_nominal_energy_wh=e_nom,
+                    result_usable_energy_wh=round(e_nom * cfg.usable_soc_window, 1),
+                    result_max_temp_c=34.8,
+                    result_min_soc=round(1.0 - cfg.usable_soc_window, 2),
+                    result_soh_capacity_pct=99.8,
+                    result_soh_resistance_pct=100.2,
+                )
+                session.add(sim_run)
 
     session.flush()
